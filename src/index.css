@@ -22,3 +22,145 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
+/* Exercise animations */
+.exanim .part {
+  transform-box: view-box;
+}
+
+@keyframes pushups-move {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+.exanim-pushups {
+  animation: pushups-move 1.1s ease-in-out infinite;
+}
+@keyframes pushups-arm-bend {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(12deg); }
+}
+.exanim-pushups .armL {
+  transform-origin: 45px 32px;
+  animation: pushups-arm-bend 1.1s ease-in-out infinite;
+}
+.exanim-pushups .armR {
+  transform-origin: 45px 32px;
+  animation: pushups-arm-bend 1.1s ease-in-out infinite reverse;
+}
+
+@keyframes squats-move {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(14px); }
+}
+.exanim-squats {
+  animation: squats-move 1.3s ease-in-out infinite;
+}
+
+@keyframes rows-move {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.exanim-rows {
+  animation: rows-move 1s ease-in-out infinite;
+}
+@keyframes rows-arm-bend {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-14deg); }
+}
+.exanim-rows .armL {
+  transform-origin: 45px 32px;
+  animation: rows-arm-bend 1s ease-in-out infinite;
+}
+.exanim-rows .armR {
+  transform-origin: 45px 32px;
+  animation: rows-arm-bend 1s ease-in-out infinite reverse;
+}
+
+@keyframes plank-hold {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+.exanim-plank {
+  animation: plank-hold 2s ease-in-out infinite;
+}
+
+@keyframes mountain-legL {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(35deg); }
+}
+@keyframes mountain-legR {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-35deg); }
+}
+.exanim-mountain .legL {
+  transform-origin: 45px 52px;
+  animation: mountain-legL 0.6s ease-in-out infinite;
+}
+.exanim-mountain .legR {
+  transform-origin: 45px 52px;
+  animation: mountain-legR 0.6s ease-in-out infinite 0.3s;
+}
+
+@keyframes dips-move {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+.exanim-dips {
+  animation: dips-move 1.1s ease-in-out infinite;
+}
+@keyframes dips-arm-bend {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(16deg); }
+}
+.exanim-dips .armL {
+  transform-origin: 45px 32px;
+  animation: dips-arm-bend 1.1s ease-in-out infinite;
+}
+.exanim-dips .armR {
+  transform-origin: 45px 32px;
+  animation: dips-arm-bend 1.1s ease-in-out infinite reverse;
+}
+
+@keyframes lunges-legL {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50% { transform: translateX(-6px) rotate(-20deg); }
+}
+@keyframes lunges-legR {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50% { transform: translateX(6px) rotate(20deg); }
+}
+.exanim-lunges .legL {
+  transform-origin: 45px 52px;
+  animation: lunges-legL 1.4s ease-in-out infinite;
+}
+.exanim-lunges .legR {
+  transform-origin: 45px 52px;
+  animation: lunges-legR 1.4s ease-in-out infinite;
+}
+
+@keyframes pullups-move {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.exanim-pullups {
+  animation: pullups-move 1.2s ease-in-out infinite;
+}
+
+@keyframes hollow-hold {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+.exanim-hollow {
+  transform-origin: center;
+  animation: hollow-hold 1.8s ease-in-out infinite;
+}
+
+@keyframes burpees-move {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  40% { transform: translateY(16px) scaleY(0.85); }
+  70% { transform: translateY(-6px) scaleY(1.05); }
+}
+.exanim-burpees {
+  transform-origin: center;
+  animation: burpees-move 1s ease-in-out infinite;
+}

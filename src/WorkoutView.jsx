@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { WORKOUTS } from './data'
+import { ExerciseAnimation } from './ExerciseAnimation'
 
 function SetBubble({ done, onClick }) {
   return (
@@ -20,35 +22,57 @@ function SetBubble({ done, onClick }) {
 }
 
 function ExerciseRow({ exercise, completedSets, onToggleSet }) {
+  const [expanded, setExpanded] = useState(false)
   const allDone = completedSets >= exercise.sets
   return (
     <div style={{
-      display: 'flex', alignItems: 'center', gap: 14,
       padding: '15px 0',
       borderBottom: '1px solid #1e1e1e',
       opacity: allDone ? 0.45 : 1,
       transition: 'opacity 0.3s',
     }}>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{
-          fontSize: 14, fontWeight: 500,
-          color: allDone ? '#c8f55a' : '#f0f0f0',
-          textDecoration: allDone ? 'line-through' : 'none',
-          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-        }}>{exercise.name}</div>
-        <div style={{ fontSize: 11, color: '#555', fontFamily: "'DM Mono', monospace", marginTop: 2 }}>
-          {exercise.sets} sets × {exercise.reps}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+        <div
+          onClick={() => setExpanded(e => !e)}
+          style={{ flex: 1, minWidth: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}
+        >
+          <svg width="10" height="10" viewBox="0 0 10 10" style={{
+            flexShrink: 0, transition: 'transform 0.2s ease',
+            transform: expanded ? 'rotate(90deg)' : 'rotate(0deg)',
+          }}>
+            <path d="M2 1l5 4-5 4" stroke="#555" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <div style={{ minWidth: 0 }}>
+            <div style={{
+              fontSize: 14, fontWeight: 500,
+              color: allDone ? '#c8f55a' : '#f0f0f0',
+              textDecoration: allDone ? 'line-through' : 'none',
+              whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+            }}>{exercise.name}</div>
+            <div style={{ fontSize: 11, color: '#555', fontFamily: "'DM Mono', monospace", marginTop: 2 }}>
+              {exercise.sets} sets × {exercise.reps}
+            </div>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 7 }}>
+          {Array.from({ length: exercise.sets }).map((_, i) => (
+            <SetBubble
+              key={i}
+              done={i < completedSets}
+              onClick={() => onToggleSet(i)}
+            />
+          ))}
         </div>
       </div>
-      <div style={{ display: 'flex', gap: 7 }}>
-        {Array.from({ length: exercise.sets }).map((_, i) => (
-          <SetBubble
-            key={i}
-            done={i < completedSets}
-            onClick={() => onToggleSet(i)}
-          />
-        ))}
-      </div>
+      {expanded && (
+        <div style={{
+          marginTop: 12, background: '#141414', border: '1px solid #222',
+          borderRadius: 14, padding: 10,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <ExerciseAnimation id={exercise.id} />
+        </div>
+      )}
     </div>
   )
 }
