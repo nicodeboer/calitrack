@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import { useLocalStorage } from './useLocalStorage'
-import { useRestTimer } from './useRestTimer'
-import { EXERCISES } from './data'
-import { HomeView }    from './HomeView'
-import { WorkoutView } from './WorkoutView'
-import { HistoryView } from './HistoryView'
+import { HomeView }          from './HomeView'
+import { GuidedWorkoutView } from './GuidedWorkoutView'
+import { HistoryView }       from './HistoryView'
 
 const NAV = [
   { id: 'home',    label: 'Home',    icon: (active) => (
@@ -24,40 +22,17 @@ const NAV = [
 ]
 
 export default function App() {
-  const [view,         setView]         = useState('home')
-  const [completedSets, setCompletedSets] = useState({})
-  const [history,       setHistory]       = useLocalStorage('calitrack_history', [])
-  const { restSeconds, startRest, skipRest } = useRestTimer()
+  const [view,    setView]    = useState('home')
+  const [history, setHistory] = useLocalStorage('calitrack_history', [])
 
-  const startWorkout = () => {
-    setCompletedSets({})
-    setView('workout')
-  }
-
-  const toggleSet = (exerciseId, setIndex) => {
-    setCompletedSets(prev => {
-      const current = prev[exerciseId] || 0
-      const newVal  = setIndex < current ? setIndex : setIndex + 1
-      return { ...prev, [exerciseId]: newVal }
-    })
-    startRest()
-  }
+  const startWorkout = () => setView('workout')
 
   const finishWorkout = () => {
-    const completed = EXERCISES.filter(e => (completedSets[e.id] || 0) >= e.sets).length
-    setHistory(prev => [{
-      completed,
-      total:     EXERCISES.length,
-      timestamp: Date.now(),
-    }, ...prev.slice(0, 49)])
-    setCompletedSets({})
+    setHistory(prev => [{ timestamp: Date.now() }, ...prev.slice(0, 49)])
     setView('home')
   }
 
-  const cancelWorkout = () => {
-    setCompletedSets({})
-    setView('home')
-  }
+  const cancelWorkout = () => setView('home')
 
   const isWorkout = view === 'workout'
 
@@ -99,14 +74,7 @@ export default function App() {
       <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
         {view === 'home'    && <HomeView    history={history} onStart={startWorkout} />}
         {view === 'workout' && (
-          <WorkoutView
-            completedSets={completedSets}
-            onToggleSet={toggleSet}
-            onFinish={finishWorkout}
-            onCancel={cancelWorkout}
-            restSeconds={restSeconds}
-            onSkipRest={skipRest}
-          />
+          <GuidedWorkoutView onFinish={finishWorkout} onCancel={cancelWorkout} />
         )}
         {view === 'history' && <HistoryView history={history} onClear={() => setHistory([])} />}
       </div>

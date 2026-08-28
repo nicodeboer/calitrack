@@ -13,10 +13,10 @@ const LOTTIE_DATA = {
   burpees: burpeesData,
 }
 
-export function ExerciseAnimation({ id }) {
+export function ExerciseAnimation({ id, playing = true, size = 140 }) {
   return (
-    <div style={{ width: 140, height: 140, background: '#fff', borderRadius: 10, overflow: 'hidden' }}>
-      <Lottie src={LOTTIE_DATA[id]} autoplay loop style={{ width: 140, height: 140 }} />
+    <div style={{ width: size, height: size, background: '#fff', borderRadius: 10, overflow: 'hidden', flexShrink: 0 }}>
+      <Lottie src={LOTTIE_DATA[id]} autoplay={playing} loop style={{ width: size, height: size }} />
     </div>
   )
 }

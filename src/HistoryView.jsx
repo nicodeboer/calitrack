@@ -28,7 +28,6 @@ export function HistoryView({ history, onClear }) {
         const date = new Date(h.timestamp)
         const dateStr = date.toLocaleDateString('nl-NL', { weekday: 'short', day: 'numeric', month: 'short' })
         const timeStr = date.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' })
-        const pct = Math.round((h.completed / h.total) * 100)
         return (
           <div key={i} style={{
             background: '#141414', borderRadius: 14,
@@ -38,12 +37,12 @@ export function HistoryView({ history, onClear }) {
           }}>
             <div style={{
               width: 46, height: 46, borderRadius: 12,
-              background: pct === 100 ? '#c8f55a' : '#1e1e1e',
+              background: '#c8f55a',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               flexShrink: 0,
             }}>
               <svg width="18" height="18" viewBox="0 0 14 14" fill="none">
-                <path d="M2 7l3.5 3.5L12 3" stroke={pct === 100 ? '#111' : '#444'} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 7l3.5 3.5L12 3" stroke="#111" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
             <div style={{ flex: 1 }}>
@@ -52,11 +51,8 @@ export function HistoryView({ history, onClear }) {
                 {dateStr} · {timeStr}
               </div>
             </div>
-            <div style={{
-              fontFamily: "'DM Mono', monospace", fontSize: 11,
-              color: pct === 100 ? '#c8f55a' : '#555',
-            }}>
-              {pct === 100 ? '✓ VOLLEDIG' : `${pct}%`}
+            <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: '#c8f55a' }}>
+              ✓ VOLLEDIG
             </div>
           </div>
         )

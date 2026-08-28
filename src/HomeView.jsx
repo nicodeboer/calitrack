@@ -1,4 +1,5 @@
-import { DAYS_NL } from './data'
+import { DAYS_NL, EXERCISES } from './data'
+import { ExerciseAnimation } from './ExerciseAnimation'
 
 export function HomeView({ history, onStart }) {
   const today = new Date()
@@ -80,6 +81,19 @@ export function HomeView({ history, onStart }) {
         </div>
       </div>
 
+      {/* Exercise preview grid */}
+      <div style={{ marginBottom: 24 }}>
+        <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, color: '#555', marginBottom: 10 }}>VANDAAG</div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'space-between' }}>
+          {EXERCISES.map(ex => (
+            <div key={ex.id} style={{ width: 'calc(33.333% - 7px)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <ExerciseAnimation id={ex.id} size={90} />
+              <div style={{ fontSize: 11, color: '#aaa', marginTop: 6, textAlign: 'center' }}>{ex.name}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Start button */}
       <button onClick={onStart} style={{
         width: '100%', padding: '22px 0 18px',
@@ -92,7 +106,7 @@ export function HomeView({ history, onStart }) {
         transition: 'transform 0.1s',
         WebkitTapHighlightColor: 'transparent',
       }}>
-        START
+        BEGIN
       </button>
     </div>
   )
