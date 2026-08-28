@@ -1,10 +1,6 @@
 import { DAYS_NL } from './data'
 
 export function HomeView({ history, onStart }) {
-  const nextWorkout = history.length === 0
-    ? 'A'
-    : history[0].workout === 'A' ? 'B' : 'A'
-
   const today = new Date()
   const weekStart = new Date(today)
   weekStart.setDate(today.getDate() - ((today.getDay() + 6) % 7)) // Mon
@@ -84,32 +80,20 @@ export function HomeView({ history, onStart }) {
         </div>
       </div>
 
-      {/* Start buttons */}
-      <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, color: '#555', marginBottom: 12 }}>
-        VOLGENDE AANBEVOLEN: WORKOUT {nextWorkout}
-      </div>
-      <div style={{ display: 'flex', gap: 12, marginBottom: 16 }}>
-        {['A', 'B'].map(type => (
-          <button key={type} onClick={() => onStart(type)} style={{
-            flex: 1, padding: '22px 0 18px',
-            borderRadius: 16, border: 'none',
-            background: type === nextWorkout ? '#c8f55a' : '#1a1a1a',
-            color: type === nextWorkout ? '#111' : '#444',
-            cursor: 'pointer',
-            fontFamily: "'Bebas Neue', sans-serif",
-            fontSize: 42, letterSpacing: 3,
-            display: 'flex', flexDirection: 'column',
-            alignItems: 'center', gap: 4,
-            transition: 'transform 0.1s',
-            WebkitTapHighlightColor: 'transparent',
-          }}>
-            {type}
-            <span style={{ fontSize: 9, fontFamily: "'DM Mono', monospace", letterSpacing: 1, opacity: 0.7 }}>
-              {type === nextWorkout ? 'AANBEVOLEN' : 'ALTERNATIEF'}
-            </span>
-          </button>
-        ))}
-      </div>
+      {/* Start button */}
+      <button onClick={onStart} style={{
+        width: '100%', padding: '22px 0 18px',
+        borderRadius: 16, border: 'none',
+        background: '#c8f55a', color: '#111',
+        cursor: 'pointer',
+        fontFamily: "'Bebas Neue', sans-serif",
+        fontSize: 42, letterSpacing: 3,
+        marginBottom: 16,
+        transition: 'transform 0.1s',
+        WebkitTapHighlightColor: 'transparent',
+      }}>
+        START
+      </button>
     </div>
   )
 }

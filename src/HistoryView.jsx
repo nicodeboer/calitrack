@@ -40,12 +40,14 @@ export function HistoryView({ history, onClear }) {
               width: 46, height: 46, borderRadius: 12,
               background: pct === 100 ? '#c8f55a' : '#1e1e1e',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontFamily: "'Bebas Neue', sans-serif", fontSize: 24,
-              color: pct === 100 ? '#111' : '#444',
               flexShrink: 0,
-            }}>{h.workout}</div>
+            }}>
+              <svg width="18" height="18" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke={pct === 100 ? '#111' : '#444'} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 3 }}>Workout {h.workout}</div>
+              <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 3 }}>Training</div>
               <div style={{ fontSize: 10, color: '#555', fontFamily: "'DM Mono', monospace" }}>
                 {dateStr} · {timeStr}
               </div>

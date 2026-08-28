@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { WORKOUTS } from './data'
+import { EXERCISES } from './data'
 import { ExerciseAnimation } from './ExerciseAnimation'
 
 function SetBubble({ done, onClick }) {
@@ -77,8 +77,8 @@ function ExerciseRow({ exercise, completedSets, onToggleSet }) {
   )
 }
 
-export function WorkoutView({ workoutType, completedSets, onToggleSet, onFinish, onCancel, restSeconds, onSkipRest }) {
-  const exercises = WORKOUTS[workoutType]
+export function WorkoutView({ completedSets, onToggleSet, onFinish, onCancel, restSeconds, onSkipRest }) {
+  const exercises = EXERCISES
   const totalSets = exercises.reduce((a, e) => a + e.sets, 0)
   const doneSets  = exercises.reduce((a, e) => a + Math.min(completedSets[e.id] || 0, e.sets), 0)
   const progress  = totalSets > 0 ? doneSets / totalSets : 0
@@ -92,8 +92,8 @@ export function WorkoutView({ workoutType, completedSets, onToggleSet, onFinish,
       {/* Progress */}
       <div style={{ marginBottom: 20 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 10 }}>
-          <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 2, color: '#888' }}>
-            WORKOUT <span style={{ color: '#c8f55a' }}>{workoutType}</span>
+          <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 2, color: '#c8f55a' }}>
+            WORKOUT
           </div>
           <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: '#555' }}>
             {doneSets}/{totalSets} sets

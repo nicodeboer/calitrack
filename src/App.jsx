@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useLocalStorage } from './useLocalStorage'
 import { useRestTimer } from './useRestTimer'
-import { WORKOUTS } from './data'
+import { EXERCISES } from './data'
 import { HomeView }    from './HomeView'
 import { WorkoutView } from './WorkoutView'
 import { HistoryView } from './HistoryView'
@@ -25,13 +25,11 @@ const NAV = [
 
 export default function App() {
   const [view,         setView]         = useState('home')
-  const [activeWorkout, setActiveWorkout] = useState(null)
   const [completedSets, setCompletedSets] = useState({})
   const [history,       setHistory]       = useLocalStorage('calitrack_history', [])
   const { restSeconds, startRest, skipRest } = useRestTimer()
 
-  const startWorkout = (type) => {
-    setActiveWorkout(type)
+  const startWorkout = () => {
     setCompletedSets({})
     setView('workout')
   }
@@ -46,21 +44,17 @@ export default function App() {
   }
 
   const finishWorkout = () => {
-    const exercises = WORKOUTS[activeWorkout]
-    const completed = exercises.filter(e => (completedSets[e.id] || 0) >= e.sets).length
+    const completed = EXERCISES.filter(e => (completedSets[e.id] || 0) >= e.sets).length
     setHistory(prev => [{
-      workout:   activeWorkout,
       completed,
-      total:     exercises.length,
+      total:     EXERCISES.length,
       timestamp: Date.now(),
     }, ...prev.slice(0, 49)])
-    setActiveWorkout(null)
     setCompletedSets({})
     setView('home')
   }
 
   const cancelWorkout = () => {
-    setActiveWorkout(null)
     setCompletedSets({})
     setView('home')
   }
@@ -106,7 +100,6 @@ export default function App() {
         {view === 'home'    && <HomeView    history={history} onStart={startWorkout} />}
         {view === 'workout' && (
           <WorkoutView
-            workoutType={activeWorkout}
             completedSets={completedSets}
             onToggleSet={toggleSet}
             onFinish={finishWorkout}
