@@ -6,8 +6,11 @@ export const EXERCISES = [
   { id: 'burpees',       name: 'Burpees',         duration: 30 },
   { id: 'splitjumps',    name: 'Split Jumps',     duration: 30 },
   { id: 'plankarmraise', name: 'Plank Arm Raise', duration: 40 },
+  { id: 'situps',        name: 'Sit-ups',         duration: 30 },
   { id: 'squatsreach',   name: 'Squat Reach',     duration: 30 },
   { id: 'reverselunges', name: 'Reverse Lunges',  duration: 30 },
+  { id: 'jumpingsquats', name: 'Jumping Squats',  duration: 30 },
+  { id: 'crunches',      name: 'Crunches',        duration: 30 },
 ]
 
 export const ROUNDS = 3

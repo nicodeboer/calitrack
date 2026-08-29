@@ -122,7 +122,7 @@ export function HomeView({ history, onStart }) {
                 <div style={{
                   position: 'relative', borderRadius: 10,
                   outline: selected ? '2px solid #c8f55a' : '2px solid transparent',
-                  opacity: selected ? 1 : 0.55,
+                  opacity: 1,
                   transition: 'opacity 0.15s, outline-color 0.15s',
                 }}>
                   <ExerciseAnimation id={ex.id} size={90} />

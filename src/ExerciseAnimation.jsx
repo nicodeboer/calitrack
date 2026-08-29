@@ -11,6 +11,9 @@ import reverselungesData from './animations/reverselunges.json'
 import squatsGif from './animations/squats.gif'
 import lungesGif from './animations/lunges.gif'
 import reverselungesGif from './animations/reverselunges.gif'
+import jumpingsquatsData from './animations/jumping-squats.gif'
+import crunchesData from './animations/crunches.gif'
+import situpsData from './animations/situps.gif'
 
 const LOTTIE_DATA = {
   pushups: pushupsData,
@@ -25,6 +28,9 @@ const GIF_DATA = {
   squats: squatsGif,
   lunges: lungesGif,
   reverselunges: reverselungesGif,
+  jumpingsquats: jumpingsquatsData,
+  crunches: crunchesData,
+  situps: situpsData,
 }
 
 export function ExerciseAnimation({ id, playing = true, size = 140 }) {
