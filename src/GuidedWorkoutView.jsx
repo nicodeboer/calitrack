@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
-import { EXERCISES, ROUNDS, COUNTDOWN_SECONDS } from './data'
+import { ROUNDS, COUNTDOWN_SECONDS } from './data'
 import { ExerciseAnimation } from './ExerciseAnimation'
 
-export function GuidedWorkoutView({ onFinish, onCancel }) {
+export function GuidedWorkoutView({ exercises, onFinish, onCancel }) {
   const [round, setRound] = useState(0)
   const [exerciseIndex, setExerciseIndex] = useState(0)
   const [phase, setPhase] = useState('countdown')
   const [secondsLeft, setSecondsLeft] = useState(COUNTDOWN_SECONDS)
 
-  const exercise = EXERCISES[exerciseIndex]
+  const exercise = exercises[exerciseIndex]
 
   useEffect(() => {
     if (secondsLeft <= 0) {
@@ -17,7 +17,7 @@ export function GuidedWorkoutView({ onFinish, onCancel }) {
         setSecondsLeft(exercise.duration)
       } else {
         const nextExerciseIndex = exerciseIndex + 1
-        if (nextExerciseIndex < EXERCISES.length) {
+        if (nextExerciseIndex < exercises.length) {
           setExerciseIndex(nextExerciseIndex)
           setPhase('countdown')
           setSecondsLeft(COUNTDOWN_SECONDS)
@@ -37,7 +37,7 @@ export function GuidedWorkoutView({ onFinish, onCancel }) {
     }
     const timer = setTimeout(() => setSecondsLeft(s => s - 1), 1000)
     return () => clearTimeout(timer)
-  }, [secondsLeft, phase, exerciseIndex, round, exercise, onFinish])
+  }, [secondsLeft, phase, exerciseIndex, round, exercise, exercises, onFinish])
 
   return (
     <div style={{
@@ -47,7 +47,7 @@ export function GuidedWorkoutView({ onFinish, onCancel }) {
       zIndex: 10,
     }}>
       <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: '#555', marginBottom: 6 }}>
-        RONDE {round + 1}/{ROUNDS} · OEFENING {exerciseIndex + 1}/{EXERCISES.length}
+        RONDE {round + 1}/{ROUNDS} · OEFENING {exerciseIndex + 1}/{exercises.length}
       </div>
       <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 2, marginBottom: 24 }}>
         {exercise.name}

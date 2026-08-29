@@ -4,6 +4,8 @@ import squatsData from './animations/squats.json'
 import plankData from './animations/plank.json'
 import lungesData from './animations/lunges.json'
 import burpeesData from './animations/burpees.json'
+import splitjumpsData from './animations/splitjumps.json'
+import plankarmraiseData from './animations/plankarmraise.json'
 
 const LOTTIE_DATA = {
   pushups: pushupsData,
@@ -11,6 +13,8 @@ const LOTTIE_DATA = {
   plank: plankData,
   lunges: lungesData,
   burpees: burpeesData,
+  splitjumps: splitjumpsData,
+  plankarmraise: plankarmraiseData,
 }
 
 export function ExerciseAnimation({ id, playing = true, size = 140 }) {

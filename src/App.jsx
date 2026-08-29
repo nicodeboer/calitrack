@@ -24,8 +24,12 @@ const NAV = [
 export default function App() {
   const [view,    setView]    = useState('home')
   const [history, setHistory] = useLocalStorage('calitrack_history', [])
+  const [selectedExercises, setSelectedExercises] = useState([])
 
-  const startWorkout = () => setView('workout')
+  const startWorkout = (exercises) => {
+    setSelectedExercises(exercises)
+    setView('workout')
+  }
 
   const finishWorkout = () => {
     setHistory(prev => [{ timestamp: Date.now() }, ...prev.slice(0, 49)])
@@ -74,7 +78,7 @@ export default function App() {
       <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
         {view === 'home'    && <HomeView    history={history} onStart={startWorkout} />}
         {view === 'workout' && (
-          <GuidedWorkoutView onFinish={finishWorkout} onCancel={cancelWorkout} />
+          <GuidedWorkoutView exercises={selectedExercises} onFinish={finishWorkout} onCancel={cancelWorkout} />
         )}
         {view === 'history' && <HistoryView history={history} onClear={() => setHistory([])} />}
       </div>

@@ -1,7 +1,27 @@
+import { useState } from 'react'
 import { DAYS_NL, EXERCISES } from './data'
 import { ExerciseAnimation } from './ExerciseAnimation'
 
+const REQUIRED_SELECTION = 5
+
 export function HomeView({ history, onStart }) {
+  const [selectedIds, setSelectedIds] = useState([])
+
+  const toggleExercise = (id) => {
+    setSelectedIds(prev => {
+      if (prev.includes(id)) return prev.filter(x => x !== id)
+      if (prev.length >= REQUIRED_SELECTION) return prev
+      return [...prev, id]
+    })
+  }
+
+  const canStart = selectedIds.length === REQUIRED_SELECTION
+
+  const handleStart = () => {
+    if (!canStart) return
+    onStart(selectedIds.map(id => EXERCISES.find(e => e.id === id)))
+  }
+
   const today = new Date()
   const weekStart = new Date(today)
   weekStart.setDate(today.getDate() - ((today.getDay() + 6) % 7)) // Mon
@@ -81,32 +101,62 @@ export function HomeView({ history, onStart }) {
         </div>
       </div>
 
-      {/* Exercise preview grid */}
+      {/* Exercise selection grid */}
       <div style={{ marginBottom: 24 }}>
-        <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, color: '#555', marginBottom: 10 }}>VANDAAG</div>
+        <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, color: '#555', marginBottom: 10 }}>
+          KIES {REQUIRED_SELECTION} OEFENINGEN ({selectedIds.length}/{REQUIRED_SELECTION})
+        </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'space-between' }}>
-          {EXERCISES.map(ex => (
-            <div key={ex.id} style={{ width: 'calc(33.333% - 7px)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <ExerciseAnimation id={ex.id} size={90} />
-              <div style={{ fontSize: 11, color: '#aaa', marginTop: 6, textAlign: 'center' }}>{ex.name}</div>
-            </div>
-          ))}
+          {EXERCISES.map(ex => {
+            const order = selectedIds.indexOf(ex.id)
+            const selected = order !== -1
+            return (
+              <div
+                key={ex.id}
+                onClick={() => toggleExercise(ex.id)}
+                style={{
+                  width: 'calc(33.333% - 7px)', display: 'flex', flexDirection: 'column',
+                  alignItems: 'center', cursor: 'pointer', position: 'relative',
+                }}
+              >
+                <div style={{
+                  position: 'relative', borderRadius: 10,
+                  outline: selected ? '2px solid #c8f55a' : '2px solid transparent',
+                  opacity: selected ? 1 : 0.55,
+                  transition: 'opacity 0.15s, outline-color 0.15s',
+                }}>
+                  <ExerciseAnimation id={ex.id} size={90} />
+                  {selected && (
+                    <div style={{
+                      position: 'absolute', top: -6, right: -6,
+                      width: 22, height: 22, borderRadius: '50%',
+                      background: '#c8f55a', color: '#111',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontFamily: "'DM Mono', monospace", fontSize: 11, fontWeight: 600,
+                    }}>{order + 1}</div>
+                  )}
+                </div>
+                <div style={{ fontSize: 11, color: selected ? '#f0f0f0' : '#aaa', marginTop: 6, textAlign: 'center' }}>{ex.name}</div>
+              </div>
+            )
+          })}
         </div>
       </div>
 
       {/* Start button */}
-      <button onClick={onStart} style={{
+      <button onClick={handleStart} disabled={!canStart} style={{
         width: '100%', padding: '22px 0 18px',
         borderRadius: 16, border: 'none',
-        background: '#c8f55a', color: '#111',
-        cursor: 'pointer',
+        background: canStart ? '#c8f55a' : '#1a1a1a',
+        color: canStart ? '#111' : '#444',
+        cursor: canStart ? 'pointer' : 'default',
         fontFamily: "'Bebas Neue', sans-serif",
-        fontSize: 42, letterSpacing: 3,
+        fontSize: canStart ? 42 : 22, letterSpacing: canStart ? 3 : 1,
         marginBottom: 16,
         transition: 'transform 0.1s',
         WebkitTapHighlightColor: 'transparent',
       }}>
-        BEGIN
+        {canStart ? 'BEGIN' : `SELECTEER ${REQUIRED_SELECTION} OEFENINGEN`}
       </button>
     </div>
   )
